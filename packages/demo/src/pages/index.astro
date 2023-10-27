@@ -1,9 +1,7 @@
 ---
-import { Markdown, Markup } from "astro-remote";
-import CodeSpan from "../components/CodeSpan.astro";
-import CodeBlock from "../components/CodeBlock.astro";
+import  Markup  from "root/packages/astro-remote/lib/Markup.astro"
 import Heading from "../components/Heading.astro";
-import Note from "../components/Note.astro";
+import {T} from "../components/T"
 
 const example = await fetch("https://example.com/").then((res) => res.text());
 const readme = `
@@ -37,8 +35,10 @@ const readme = `
   <body>
     <div class="markup">
       <h1>Markup</h1>
+      <T client:only/>
       <Markup
         content={example}
+        components={{h1: Heading}}
         sanitize={{
           dropElements: ["head"],
           blockElements: ["html", "body", "div"],
@@ -46,12 +46,5 @@ const readme = `
       />
     </div>
 
-    <div class="markdown">
-      <h1>Markdown</h1>
-      <Markdown
-        content={readme}
-        components={{ Heading, CodeBlock, CodeSpan, Note }}
-      />
-    </div>
   </body>
 </html>
